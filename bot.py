@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from discord.ext import commands
 
 load_dotenv()
+TOKEN = os.getenv('DISCORD_BOT_TOKEN')
 intents = discord.Intents.default()
 intents.members = True
 intents.voice_states = True
