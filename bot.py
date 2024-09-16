@@ -22,7 +22,7 @@ async def on_ready():
     print(f'Bot connecté en tant que {bot.user}')
 
 @slash.slash(name="autoChannel", description="Ajouter un channel de base")
-async def autoChannel(ctx, channel_id: int):
+async def auto_channel(ctx: SlashContext, channel_id: int):
     if channel_id not in register_channel_ids:
         register_channel_ids.append(channel_id)
         await ctx.send(f'Channel de base ajouté : {channel_id}')
@@ -30,7 +30,7 @@ async def autoChannel(ctx, channel_id: int):
         await ctx.send(f'Channel {channel_id} est déjà un channel de base.')
 
 @slash.slash(name="removeAutoChannel", description="Supprimer un channel de base")
-async def removeAutoChannel(ctx, channel_id: int):
+async def remove_auto_channel(ctx: SlashContext, channel_id: int):
     if channel_id in register_channel_ids:
         register_channel_ids.remove(channel_id)
         await ctx.send(f'Channel de base supprimé : {channel_id}')
