@@ -20,21 +20,33 @@ register_channel_ids = []
 async def on_ready():
     print(f'Bot connecté en tant que {bot.user}')
 
-@bot.slash_command(name="autochannel", description="Ajouter un channel de base")
-async def auto_channel(ctx: discord.ApplicationContext, channel_id: int):
+@bot.slash_command(name="autoChannel", description="Ajouter un channel de base")
+async def auto_channel(ctx: discord.ApplicationContext, channel_id: str):
+    try:
+        channel_id = int(channel_id)
+    except ValueError:
+        await ctx.respond("Veuillez entrer un nombre entier valide pour l'ID du canal.")
+        return
+
     if channel_id not in register_channel_ids:
         register_channel_ids.append(channel_id)
-        await ctx.send(f'Channel de base ajouté : {channel_id}')
+        await ctx.respond(f'Channel de base ajouté : {channel_id}')
     else:
-        await ctx.send(f'Channel {channel_id} est déjà un channel de base.')
+        await ctx.respond(f'Channel {channel_id} est déjà un channel de base.')
 
-@bot.slash_command(name="remove-autochannel", description="Supprimer un channel de base")
-async def remove_auto_channel(ctx: discord.ApplicationContext, channel_id: int):
+@bot.slash_command(name="removeAutoChannel", description="Supprimer un channel de base")
+async def remove_auto_channel(ctx: discord.ApplicationContext, channel_id: str):
+    try:
+        channel_id = int(channel_id)
+    except ValueError:
+        await ctx.respond("Veuillez entrer un nombre entier valide pour l'ID du canal.")
+        return
+
     if channel_id in register_channel_ids:
         register_channel_ids.remove(channel_id)
-        await ctx.send(f'Channel de base supprimé : {channel_id}')
+        await ctx.respond(f'Channel de base supprimé : {channel_id}')
     else:
-        await ctx.send(f'Channel {channel_id} n\'est pas un channel de base.')
+        await ctx.respond(f'Channel {channel_id} n est pas un channel de base.')
 
 @bot.event
 async def on_voice_state_update(member, before, after):
