@@ -20,7 +20,7 @@ register_channel_ids = []
 async def on_ready():
     print(f'Bot connecté en tant que {bot.user}')
 
-@bot.slash_command(name="autoChannel", description="Ajouter un channel de base")
+@bot.slash_command(name="autochannel", description="Ajouter un channel de base")
 async def auto_channel(ctx: discord.ApplicationContext, channel_id: int):
     if channel_id not in register_channel_ids:
         register_channel_ids.append(channel_id)
@@ -28,7 +28,7 @@ async def auto_channel(ctx: discord.ApplicationContext, channel_id: int):
     else:
         await ctx.send(f'Channel {channel_id} est déjà un channel de base.')
 
-@bot.slash_command(name="removeAutoChannel", description="Supprimer un channel de base")
+@bot.slash_command(name="remove-autochannel", description="Supprimer un channel de base")
 async def remove_auto_channel(ctx: discord.ApplicationContext, channel_id: int):
     if channel_id in register_channel_ids:
         register_channel_ids.remove(channel_id)
