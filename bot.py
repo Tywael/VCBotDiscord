@@ -73,9 +73,11 @@ async def on_voice_state_update(member, before, after):
             number_left = re.match(r".* #(\d+)$", left_channel.name)
             if number_left:
                 next_number = int(number_left.group(1)) + 1
-                next_channel_name = f"{base_name} #{next_number}"
-                next_channel = discord.utils.get(guild.voice_channels, name=next_channel_name)
-                if next_channel and len(next_channel.members) == 0:
-                    await next_channel.delete()
-                    register_channel_ids.remove(next_channel.id)
+            else:
+                next_number = 2
+            next_channel_name = f"{base_name} #{next_number}"
+            next_channel = discord.utils.get(guild.voice_channels, name=next_channel_name)
+            if next_channel and len(next_channel.members) == 0:
+                await next_channel.delete()
+                register_channel_ids.remove(next_channel.id)
 bot.run(TOKEN)
