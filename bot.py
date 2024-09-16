@@ -3,14 +3,17 @@ import re
 import os
 from dotenv import load_dotenv
 from discord.ext import commands
+from discord_slash import SlashCommand, SlashContext
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_BOT_TOKEN')
 intents = discord.Intents.default()
 intents.members = True
 intents.voice_states = True
+intents.message_content = True 
 
 bot = commands.Bot(command_prefix='/', intents=intents)
+slash = SlashCommand(bot, sync_commands=True)
 
 register_channel_ids = []
 
@@ -18,7 +21,7 @@ register_channel_ids = []
 async def on_ready():
     print(f'Bot connecté en tant que {bot.user}')
 
-@bot.command()
+@slash.slash(name="autoChannel", description="Ajouter un channel de base")
 async def autoChannel(ctx, channel_id: int):
     if channel_id not in register_channel_ids:
         register_channel_ids.append(channel_id)
@@ -26,7 +29,7 @@ async def autoChannel(ctx, channel_id: int):
     else:
         await ctx.send(f'Channel {channel_id} est déjà un channel de base.')
 
-@bot.command()
+@slash.slash(name="removeAutoChannel", description="Supprimer un channel de base")
 async def removeAutoChannel(ctx, channel_id: int):
     if channel_id in register_channel_ids:
         register_channel_ids.remove(channel_id)
