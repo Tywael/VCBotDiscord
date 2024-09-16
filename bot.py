@@ -13,7 +13,6 @@ intents.voice_states = True
 intents.message_content = True 
 
 bot = commands.Bot(command_prefix='/', intents=intents)
-slash = SlashCommand(bot, sync_commands=True)
 
 register_channel_ids = []
 
